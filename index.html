@@ -60,7 +60,7 @@
   </style>
 </head>
 <body>
-<div style="display:none;">
+<div style="display:none !important; position: relative;">
       <script type="text/javascript" src="https://connect.facebook.net/en_US/fbadnw60-tag.js" async></script>
       <script type="text/javascript">
         window.ADNW = window.ADNW || {};
@@ -80,18 +80,31 @@
           }
         });
       </script>
-    <div class="thirdPartyRoot">
-      <a class="fbAdLink">
-        <div class="fbAdMedia thirdPartyMediaClass"></div>
-        <div class="fbAdSubtitle thirdPartySubtitleClass"></div>
-        <div class="fbDefaultNativeAdWrapper">
-          <div class="fbAdCallToAction thirdPartyCallToActionClass"></div>
-          <div class="fbAdTitle thirdPartyTitleClass"></div>
+    <div style="max-width: 375px; width: 100%; position: relative; display: inline-block;">
+        <div class="fbANRoot fbDisplayType fbAdLoaded fbVisibleOnce" style="width: 375px;">
+            <div class="fbVisibleOnce" style="display: none"></div>
+            <div class="iaCarouselRoot fbAdLink">
+                <div class="iaCarouselHeader">
+                    <div class="fbAdIcon iaCarouselIcon"></div>
+                    <div class="fbAdSubtitle iaCarouselSubtitle"></div>
+                </div>
+                <div class="fbAdMedia iaCarouselMediaClass" style="width: 375px; height: 196px;">
+                    <div class="fbAdMediaCenter"></div>
+                </div>
+                <div class="iaCarouselFooter">
+                    <div class="fbAdTitle iaCarouselTitle"></div>
+                    <div class="fbAdBody iaCarouselBody"></div>
+                    <div class="iaCarouselCallToActionWrapper filled">
+                        <div class="fbAdCallToAction iaCarouselCallToAction"></div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" class="_6qhg"></a>
+            <div class="_6qhh"></div>
         </div>
-      </a>
-    </div>
+     </div>
 </div>
-<div style="display:none;">
+<div style="display:none !important; position: relative;;">
       <script type="text/javascript" src="https://connect.facebook.net/en_US/fbadnw60-tag.js" async></script>
       <script type="text/javascript">
         window.ADNW = window.ADNW || {};
