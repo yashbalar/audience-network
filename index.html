@@ -91,5 +91,26 @@
       </a>
     </div>
 </div>
+<div style="display:none;">
+      <script type="text/javascript" src="https://connect.facebook.net/en_US/fbadnw60-tag.js" async></script>
+      <script type="text/javascript">
+        window.ADNW = window.ADNW || {};
+        window.ADNW.v60 = window.ADNW.v60 || {};
+        window.ADNW.v60.slots = window.ADNW.v60.slots || [];
+        window.ADNW.v60.slots.push({
+          rootElement: document.currentScript.parentElement,
+          placementid: '616851695460361_620351341777063',
+          format: '300x250',
+          testmode: false,
+          onAdLoaded: function(rootElement) {
+            console.log('Audience Network [616851695460361_620351341777063] ad loaded');
+            rootElement.style.display = 'block';
+          },
+          onAdError: function(errorCode, errorMessage) {
+            console.log('Audience Network [616851695460361_620351341777063] error (' + errorCode + ') ' + errorMessage);
+          }
+        });
+      </script>
+</div>
 </body>
 </html>  
