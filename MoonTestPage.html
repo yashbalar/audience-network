@@ -12,56 +12,256 @@
 
     <link href="https://tahaj.github.io/bootstrap.min.css" rel="stylesheet">
     <link href="https://tahaj.github.io/index.css" rel="stylesheet">
+	  
+   <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+
+   <script>
+	loadScript('//acdn.adnxs.com/prebid/not-for-prod/prebid.js');
+	function loadScript(scriptSrc) {
+	  var script = document.createElement('script');
+	  script.async=true;
+	  script.type = 'text/javascript';
+	  script.src = scriptSrc;
+	  var node = document.getElementsByTagName('script')[0];
+	  node.parentNode.insertBefore(script, node);
+	 }
+	   
+            var div_1_sizes = [
+                [300, 250]
+            ];
+	    var div_2_sizes = [
+                [300, 600]
+            ];
+            
+            var PREBID_TIMEOUT = 600; // Recommended timeout for networks to respond with bid
+            var FAILSAFE_TIMEOUT = 2000;
+	   // Defines a list of all adunits
+           var adUnits = [{
+                 code: 'div-gpt-ad-1559248285557-0', // adSlot's html <div> code
+                 sizes: [[300, 250], [300, 600]],
+                 bids: [{
+                        bidder: 'audienceNetwork',
+                        params: {
+                            placementId: '616851695460361_624077668071097'
+                        }
+                 }, {
+			bidder: 'appnexus',
+			params: {
+			  placementId: '13144370'
+		       }
+		 }, {
+			  bidder: 'criteo',
+			  params: {
+			    zoneId: "1234567"
+			  }
+		}, {
+		      bidder: 'rubicon',
+		      params: {
+		       accountId: "98765",
+		       siteId: "56789",
+		       zoneId: "345678"
+		     }
+		 }]
+	   },{
+		 code: 'div-gpt-ad-1560300915217-0', // adSlot's html <div> code    
+                 sizes: [[300, 250]],
+		 bids: [{
+			bidder: 'audienceNetwork',
+			params: {
+			      placementId: '616851695460361_624077744737756',
+			      format: 'native'
+			}
+		 }]
+           }];
+            var googletag = googletag || {};
+            googletag.cmd = googletag.cmd || [];
+            var pbjs = pbjs || {};
+            pbjs.que = pbjs.que || [];
+	   
+ 	    // This is the callback that will be called by PBJS after auction	   
+            function initAdserver() {
+                if (pbjs.initAdserverSet) return;
+		    
+                googletag.cmd.push(function() {
+                    pbjs.que.push(function() {
+                        pbjs.setTargetingForGPTAsync(); // Sets targeting key-value pairs for DFP
+                        googletag.pubads().refresh([slot1, slot2]); // Calls DFP Ad Server
+                    });
+                });
+		    
+                pbjs.initAdserverSet = true; // Informs PBJS that DFP Ad server was called
+            }
+	   
+	   
+	   
+	    pbjs.bidderSettings = {
+		    appnexus: {
+			      bidCpmAdjustment: function(bidCpm) { //adjust the CPM dynamically
+			       return bidCpm + 12.00;
+			     },
+			      alwaysUseBid: true,
+			},
+		    criteo: {
+			      bidCpmAdjustment: function(bidCpm) { //adjust the CPM dynamically
+			       return bidCpm + 1.00;
+			     },
+			      alwaysUseBid: true,
+			},
+		    rubicon: {
+			      bidCpmAdjustment: function(bidCpm) { //adjust the CPM dynamically
+			       return bidCpm + 0.50;
+			     },
+			      alwaysUseBid: true,
+			},
+		    indexExchange: {
+			      bidCpmAdjustment: function(bidCpm) { //adjust the CPM dynamically
+			       return bidCpm + 0.50;
+			     },
+			      alwaysUseBid: true,
+			},
+                    standard: {
+                        adserverTargeting: [
+                            {
+                                key: "hb_bidder",
+                                val: function (bidResponse) {
+                                    console.log('Bid Response Bidder Name: ' + bidResponse.bidderCode);
+                                    return bidResponse.bidderCode;
+                                }
+                            }, {
+                                key: "hb_adid",
+                                val: function (bidResponse) {
+                                    console.log('Bid Response Ad ID: ' + bidResponse.adId);
+                                    return bidResponse.adId;
+                                }
+                            }, {
+                                key: "hb_pb",
+                                val: function (bidResponse) {
+                                    console.log('Bid Response Bid Price: ' + bidResponse.pbMg);
+                                    return bidResponse.pbMg;
+                                }
+                            }
+			]
+		    }
+	    };
+	   
+	    pbjs.que.push(function() {
+                pbjs.addAdUnits(adUnits); // Adds all the defined adunits to PBJS
+                pbjs.requestBids({ // Requests bids by defining callback handler after auction and timeout for bidders
+                    bidsBackHandler: initAdserver, // Callback method
+                    timeout: PREBID_TIMEOUT // Timeout for bidders
+                });
+            });
+	   
+            // in case PBJS doesn't load
+            setTimeout(initAdserver, FAILSAFE_TIMEOUT);
+	    var slot1, slot2, slot3, slot4; 
+	    // This code defines an adSlot by connecting DFP adunit code with size and html <div>     
+            googletag.cmd.push(function() {
+                slot3 = googletag
+			.defineSlot(
+				    '/64720321/prebid-adunit-300-250', // adunit code
+				    div_1_sizes, 		       // size
+				    'div-gpt-ad-1559248285557-0')      // html <div>
+			.addService(googletag.pubads());
+		
+                slot2 = googletag
+			.defineSlot(
+				    '/64720321/direct-sold-test-300-600', 
+				    div_2_sizes, 
+				    'div-gpt-ad-1559224461151-0')
+			.addService(googletag.pubads());
+		    
+                slot1 = googletag
+			.defineSlot(
+				    '/64720321/direct-sold-test-300-250', 
+				    div_1_sizes, 
+				    'div-gpt-ad-1559167585393-0')
+			.addService(googletag.pubads());
+		slot4 = googletag
+			.defineSlot('/64720321/prebid-adunit-native', [[1,1],['fluid']], 'div-gpt-ad-1560300915217-0')
+			.addService(googletag.pubads());
+		    
+		googletag.pubads().disableInitialLoad(); // this will block GPT from loading initially, giving PBJS time to run header bidding auction
+		googletag.pubads().collapseEmptyDivs(true);
+                googletag.enableServices();
+             });
+        </script>
+	  
   </head>
 
   <body>
-  <script>
-        function syncCookie() {
-        pixelHTML = '<img width=1 height=1 src="https://www.facebook.com/audiencenetwork/idsync?partner=343816786389271&callback=https%3A//cm.g.doubleclick.net/pixel%3Fgoogle_nid%3Djb_nb%26google_cver=1%26google_push=AHNF13JIU1dnZffqyxi-vOe4ju5O4R111d-VPEhkAyQljA%26google_hm%3D%24BUYERUID" />';
-         document.getElementById('pixel').innerHTML = pixelHTML;
-        }
-	function syncCookieAndFetchAds() {
-		syncCookie();
-		googletag.pubads().refresh()
-	}
-  </script>
-
-   <script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
-   <script>
-     var googletag = googletag || {};
-     googletag.cmd = googletag.cmd || [];
-   </script>
-
-   <script>
-   googletag.cmd.push(function() {
-        googletag.defineSlot('/217152209/Jedi_Whale/jedi_blue_facebook_web/jedi_blue_facebook_web', [300, 250], 'div-gpt-ad-1541010951098-0')
-                        .addService(googletag.pubads())
-                        .setTargeting("fb_placement_id", "343816786389271_355745265196423");
-        googletag.pubads().set("page_url", "343816786389271_351004222337194.com");
-        googletag.pubads().setLocation("94043, US");
-        googletag.enableServices();
-   });
-   </script>
     <header>
       <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 	<a style="color:white"><class="navbar-brand"> <img src="https://tahaj.github.io/fbicon.png" width="20" height="20" class="d-inline-block align-top" alt=""> Audience Network | </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
       </nav>
     </header>
 
     <main role="main" class="container">
       
-      <hr>
-      <button type="button" class="btn btn-secondary" onClick="syncCookieAndFetchAds();">Fetch Ads</button>
-      <br><hr>
-     <!--Medium Rect -->
-     <div id='div-gpt-ad-1541010951098-0' style='height:250px; width:300px;'>
-     <script>
-       googletag.cmd.push(function() { googletag.display('div-gpt-ad-1541010951098-0'); });
-     </script>
-     </div>
+      <div>
+        <h2 class="logo cursive">
+            Make Something Awesome
+        </h2>
+        <h4 style="color:#D63A18">Direct Sold - 300x250</h4>
+        <!-- /64720321/direct-sold-test-300-250 -->
+	<!-- This script is part of GPT tag that loads the image creative into the AdSlot -->
+        <div id='div-gpt-ad-1559167585393-0' style='height:250px; width:300px;'>
+            <script>
+                 googletag.cmd.push(function() {
+                     googletag.display('div-gpt-ad-1559167585393-0');
+		     console.log("DFP AdUnit: direct-sold-test-300-250 loaded");
+                 });
+             </script>
+        </div>
+
+        <h4 style="color:#D63A18;margin-top: 20px;">Direct Sold - 300x600</h4>
+        <!-- /64720321/direct-sold-test-300-600 -->
+	<!-- This script is part of GPT tag that loads the image creative into the AdSlot -->
+        <div id='div-gpt-ad-1559224461151-0' style='height:600px; width:300px;'>
+            <script>
+                 googletag.cmd.push(function() {
+                     googletag.display('div-gpt-ad-1559224461151-0');
+		     console.log("DFP AdUnit: direct-sold-test-300-600 loaded");
+                 });
+             </script>
+        </div>
+
+	<h4 style="color:#D63A18;margin-top: 20px;">Header Bidding - Native</h4>
+	<!-- /64720321/prebid-adunit-native -->
+	<!-- This script is part of GPT tag that loads the creative into the AdSlot -->    
+	<div id='div-gpt-ad-1560300915217-0' class='adSlot3'>
+	     <script>
+		    googletag.cmd.push(function() { 
+				googletag.display('div-gpt-ad-1560300915217-0'); 
+		    });
+	     </script>
+	     <!-- This html code is used to display native ad after GPT tag loads the 3rd party creative script and prebid renders audience network tag --> 
+	     <div class="fbANRoot fbDisplayType fbAdLoaded fbVisibleOnce">
+		  <a class="fbAdLink">
+		    <div class="fbAdMedia thirdPartyMediaClass"></div>
+		    <div class="fbAdSubtitle thirdPartySubtitleClass"></div>
+		    <div class="fbAdBody thirdPartyAdBody" data-auto-fit-text="true"></div>
+		    <div class="fbDefaultNativeAdWrapper">
+			      <div class="fbAdCallToAction thirdPartyCallToActionClass"></div>
+			      <div class="fbAdTitle thirdPartyTitleClass"></div>
+		    </div>
+		  </a>
+	      </div>  
+        </div>
+	     
+        <h4 style="color:#D63A18;margin-top: 20px;">Header Bidding - 300x250</h4>
+        <!-- /64720321/prebid-adunit-300-250 -->
+	<!-- This script is part of GPT tag that loads the 3rd party creative into the AdSlot -->    
+        <div id='div-gpt-ad-1559248285557-0' class='adSlot4'>
+             <script>
+                   googletag.cmd.push(function() { 
+                        googletag.display('div-gpt-ad-1559248285557-0'); 
+		        console.log("DFP AdUnit: prebid-adunit-300-250 loaded");
+                   });
+             </script>
+        </div>
+	 
+    </div>
     </main>
 
     <footer class="footer">
@@ -74,12 +274,31 @@
     <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery-slim.min.js"><\/script>')</script>
     <script src="https://tahaj.github.io/popper.min.js"></script>
     <script src="https://tahaj.github.io/bootstrap.min.js"></script>
-    <script>
-	$( "#cookiesync" ).click(function( event ) {
-  	syncCookie();
-	event.preventDefault();
-    });
-   </script>
-   <div id='pixel'></div>
   </body>
+  <!-- Enables Lazy loading -->	
+    <script>
+      var slot3_refreshed = false;
+      var slot4_refreshed = false;
+      var listener = function() {
+        if (window.scrollY >= div2H2 && !slot3_refreshed) {
+          googletag.cmd.push(function() {
+            googletag.pubads().refresh([slot3]);
+          });
+          slot3_refreshed = true;
+        } else if (window.scrollY >= div3H3 && !slot4_refreshed) {
+          googletag.cmd.push(function() {
+            googletag.pubads().refresh([slot4]);
+          });
+          slot4_refreshed = true;
+          window.removeEventListener('scroll', listener);
+        };
+      };
+      window.addEventListener('scroll', listener);
+      var div2 = document.querySelector(".adSlot3");
+      var div2H = div2.offsetTop;
+      var div2H2 = div2H - 850;	          
+      var div3 = document.querySelector(".adSlot4");
+      var div3H = div3.offsetTop;
+      var div3H3 = div3H - 850;
+    </script>
 </html>
